@@ -149,7 +149,7 @@ Custom property | Description | Default
     </style>
 
     <div class="header">
-      <a href="[[nav]]">
+      <a href="[[nav]]" on-tap="sendScrollPos">
         <iron-image
             hidden$="[[!image]]"
             aria-hidden$="[[_isHidden(image)]]"
@@ -265,6 +265,17 @@ Custom property | Description | Default
           readOnly: true,
           computed: '_computeAnimated(animatedShadow)'
         }
+      },
+        
+       /**
+       * We send the last scroll position back to the main component
+       * so the user can continue browsing where he left of before opening the preview
+       */
+
+      sendScrollPos: function(){
+        this.dispatchEvent(new CustomEvent('on-preview', {
+          bubbles: true, composed: true, detail: {scrollPos: window.pageYOffset}
+        }));
       },
 
       /**
